@@ -66,8 +66,8 @@ public class PoMerger {
       System.out.println("Untranslated file confirmed to have all the keys that are already in the translated file.");
     } else {
       System.err.println("Translated file has entries that the untranslated one does not! ");
-      untranslatedFileKeys.removeAll(translatedFileKeys);
-      System.err.println("The keys are: " + untranslatedFileKeys);
+      translatedFileKeys.removeAll(untranslatedFileKeys);
+      System.err.println("The keys are: " + translatedFileKeys);
       System.exit(3);
     }
 
