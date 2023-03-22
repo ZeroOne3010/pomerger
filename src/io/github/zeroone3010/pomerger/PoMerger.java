@@ -25,7 +25,7 @@ public class PoMerger {
 
   public static void main(String[] args) throws IOException {
     if (args.length != 3) {
-      System.out.println("Enter two file names and an output path as parameters");
+      System.err.println("Enter two file names and an output path as parameters");
       System.exit(1);
     }
 
@@ -65,9 +65,9 @@ public class PoMerger {
     if (allKeysStillThere) {
       System.out.println("Untranslated file confirmed to have all the keys that are already in the translated file.");
     } else {
-      System.out.println("Translated file has entries that the untranslated one does not! ");
+      System.err.println("Translated file has entries that the untranslated one does not! ");
       untranslatedFileKeys.removeAll(translatedFileKeys);
-      System.out.println("The keys are: " + untranslatedFileKeys);
+      System.err.println("The keys are: " + untranslatedFileKeys);
       System.exit(3);
     }
 
@@ -101,7 +101,7 @@ public class PoMerger {
     for (int i = 0; i < lines.size(); i += 3) {
       final String comment = lines.get(i);
       if (!comment.startsWith("#")) {
-        System.out.printf("Out of sync when i = %d and lines.size() = %d!%n%n", i, lines.size());
+        System.err.printf("Out of sync when i = %d and lines.size() = %d!%n%n", i, lines.size());
         System.exit(2);
       }
       final String msgid = lines.get(i + 1).replaceFirst(MSGID_REGEX, "$1");
