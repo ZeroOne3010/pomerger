@@ -36,21 +36,21 @@ public class PoMerger {
     final List<Entry> translatedFile = parse(translatedFileLines);
     final String outputPath = args[2];
     final Path outputFilePath = Path.of(outputPath +
-        (outputPath.endsWith(File.separator)
-            ? ""
-            : File.separator)
-        + "output.po");
+      (outputPath.endsWith(File.separator)
+        ? ""
+        : File.separator)
+      + "output.po");
 
     System.out.printf("Untranslated file has %d entries (%d lines)%n", untranslatedFile.size(), untranslatedFileLines.size());
     final Map<String, Entry> translatedEntries = translatedFile.stream()
-        .collect(Collectors.toMap(Entry::comment, e -> e));
+      .collect(Collectors.toMap(Entry::comment, e -> e));
 
     final int translationFileEntryCount = translatedFile.size();
     final int translatedEntryCount = (int) translatedFile.stream().filter(Entry::isTranslated).count();
     System.out.printf("Translated file has %d entries (%d lines), %d of them translated (%d%%)%n",
-        translationFileEntryCount,
-        translatedFileLines.size(),
-        translatedEntryCount, percentage(translatedEntryCount, translationFileEntryCount));
+      translationFileEntryCount,
+      translatedFileLines.size(),
+      translatedEntryCount, percentage(translatedEntryCount, translationFileEntryCount));
 
     final Set<String> untranslatedFileKeys = untranslatedFile.stream().map(Entry::comment).collect(Collectors.toSet());
     final Set<String> translatedFileKeys = translatedFile.stream().map(Entry::comment).collect(Collectors.toSet());
@@ -84,10 +84,10 @@ public class PoMerger {
       entryConsumer.accept("msgstr \"%s\"".formatted(entry.msgstr()));
     }).toList();
     System.out.printf("Writing %d entries (%d lines) (%d%% translated) to %s...%n",
-        combinedResult.size(),
-        rawOutput.size(),
-        percentage(translatedEntryCount, combinedResult.size()),
-        outputFilePath);
+      combinedResult.size(),
+      rawOutput.size(),
+      percentage(translatedEntryCount, combinedResult.size()),
+      outputFilePath);
     Files.write(outputFilePath, rawOutput);
     System.out.printf("All done in %d ms.%n", System.currentTimeMillis() - startTime);
   }
